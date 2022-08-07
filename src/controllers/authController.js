@@ -25,20 +25,19 @@ async function signUpController(req, res) {
     }
 }
 
-async function signInController(req, res) {
+function signInController(req, res) {
     const { password } = res.locals.userData;
     const { password: dbPassword, name, id } = res.locals.dbData;
-    const dayInSecond = 24 * 3600;
 
     if (!bcrypt.compareSync(password, dbPassword)) {
         return res.status(401).send("Invalid e-mail or password");
     }
 
     const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: 30 * dayInSecond,
+        expiresIn: '30d',
     });
 
-    res.status(200).send(token);
+    return res.status(200).send(token);
 }
 
 export { signUpController, signInController };

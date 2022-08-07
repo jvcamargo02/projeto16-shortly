@@ -1,5 +1,5 @@
-import { findUsersByEmail } from "../repository/userQueries.js";
-import { signUpSchema } from "../schemas/authSchema.js";
+import { findUsersByEmail } from "../../repository/userQueries.js";
+import { signUpSchema } from "../../schemas/authSchema.js";
 
 function validateSignUp(req, res, next) {
     const { error } = signUpSchema.validate(req.body);

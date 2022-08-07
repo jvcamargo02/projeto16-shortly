@@ -6,12 +6,12 @@ import {
 import {
     findUser,
     validateSignIn,
-} from "../middlewares/signInValidate.js";
+} from "../middlewares/authMiddlewares/signInValidate.js";
 import {
     confirmPassword,
     findEmailInDb,
     validateSignUp,
-} from "../middlewares/signUpValidate.js";
+} from "../middlewares/authMiddlewares/signUpValidate.js";
 
 const auth = Router();
 
