@@ -1,4 +1,4 @@
-import { countUsersByEmail } from "../repository/userQueries.js";
+import { findUsersByEmail } from "../repository/userQueries.js";
 import { signUpSchema } from "../schemas/authSchema.js";
 
 function validateSignUp(req, res, next) {
@@ -29,7 +29,7 @@ async function findEmailInDb(req, res, next) {
     const { userData } = res.locals;
 
     try {
-        const { rowCount } = await countUsersByEmail(userData.email);
+        const { rowCount } = await findUsersByEmail(userData.email);
 
         if (rowCount !== 0) {
             return res

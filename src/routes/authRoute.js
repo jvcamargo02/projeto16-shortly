@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { signUpController } from "../controllers/authController.js";
+import {
+    signInController,
+    signUpController,
+} from "../controllers/authController.js";
+import {
+    findUser,
+    validateSignIn,
+} from "../middlewares/signInValidate.js";
 import {
     confirmPassword,
     findEmailInDb,
@@ -15,6 +22,11 @@ auth.post(
     findEmailInDb,
     signUpController
 );
-auth.post("/signin");
+auth.post(
+    "/signin",
+    validateSignIn,
+    findUser,
+    signInController
+);
 
 export default auth;
