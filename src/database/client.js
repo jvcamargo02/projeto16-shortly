@@ -5,9 +5,9 @@ const { Pool } = pg;
 const connection = new Pool({
     host: "localhost",
     port: 5432,
-    user: "joao",
+    user: "postgres",
     password: "joao2002",
-    database: "template",
+    database: "shortly",
 });
 
 export { connection as clientDb };

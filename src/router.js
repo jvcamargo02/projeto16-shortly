@@ -1,12 +1,15 @@
 import { Router } from "express";
-import ranking from "./routes/ranking";
-import signIn from "./routes/signin";
-import signUp from "./routes/signup";
-import urls from "./routes/urls";
-import users from "./routes/users";
+import auth from "./routes/authRoute.js";
+import ranking from "./routes/ranking.js";
+import urls from "./routes/urls.js";
+import users from "./routes/users.js";
 
 const router = Router();
 
-router.use(template);
+
+router.use(auth);
+router.use(urls);
+router.use(users);
+router.use(ranking);
 
 export default router;

@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import router from "./router.js";
+import { clientDb } from "./database/client.js";
 
 const app = express();
 
