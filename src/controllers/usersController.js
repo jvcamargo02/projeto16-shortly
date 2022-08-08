@@ -3,11 +3,19 @@ import { usersData } from "../repository/userQueries.js";
 async function getUserData(req, res) {
     const { userId } = res.locals;
     try {
-        const {rows: userData} = await usersData(userId);
+        const { rows: userData } = await usersData(userId);
 
-        const sendData = removeUserId(userData)
+        if (userData.length !== 1) {
+            return res
+                .status(404)
+                .send(
+                    "We couldn't find your data in our database. Please confirm re-login and confirm your credentials"
+                );
+        }
 
-         return res.status(200).send(sendData)
+        const sendData = removeUserId(userData);
+
+        return res.status(200).send(sendData[0] || sendData);
     } catch (e) {
         console.log(e);
 
@@ -15,14 +23,15 @@ async function getUserData(req, res) {
     }
 }
 
-function removeUserId (userData) {
-    const shortenedUrls = userData[0].shortenedUrls
+function removeUserId(userData) {
+    const shortenedUrls = userData[0]?.shortenedUrls;
 
-    shortenedUrls.map(url => {
-        delete url.userId
-    })
+    shortenedUrls.map((url) => {
+        delete url.userId;
+        delete url.createdAt;
+    });
 
-    return (userData)
+    return userData;
 }
 
 export { getUserData };

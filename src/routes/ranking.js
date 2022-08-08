@@ -1,7 +1,8 @@
 import { Router } from "express";
+import { getRanking } from "../controllers/rankingController.js"
 
 const ranking = Router();
 
-ranking.get("/ranking", (req, res) => res.send("Hello world ranking"));
+ranking.get("/ranking", getRanking);
 
 export default ranking;
