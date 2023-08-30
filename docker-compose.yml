@@ -1,0 +1,33 @@
+version: '3'
+services:
+  short-production:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: short-back
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '5'
+    command: bash -c "npm run dump && npm run dev"
+    ports:
+      - ${PORT}:${PORT}
+    restart: always
+    env_file:
+      - .env
+  short-postgres-production:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    volumes:
+      - /usr/local/drivent-pg/data:/var/lib/postgresql/data
+    command: postgres -p ${DB_PORT}
+
+volumes:
+  drivent-pg:
+    driver: local

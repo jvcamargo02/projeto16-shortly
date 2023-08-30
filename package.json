@@ -7,7 +7,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node ./src/server.js",
-        "dev": "npx nodemon ./src/server.js"
+        "dev": "npx nodemon ./src/server.js",
+        "dump": "node ./src/database/dump.js"
     },
     "keywords": [],
     "author": "",
