@@ -4,14 +4,21 @@ import {
     insertUrl,
     searchUrlById,
     searchUrlByShortUrl,
+    searchCodeByShortUrl
 } from "../repository/urlsQueries.js";
 
 async function postShortenUrl(req, res) {
-    const { url } = res.locals;
+    const { url, code } = res.locals;
     const { userId } = res.locals;
-    const shortUrl = nanoid(10);
 
     try {
+        const { rows: urlData } = await searchCodeByShortUrl(code);
+
+        if (urlData?.length !== 0) {
+            return res.status(409).send("Este código já está em uso");
+        }
+        const shortUrl = code;
+    
         await insertUrl(userId, shortUrl, url);
 
         return res.status(201).send({

@@ -11,7 +11,6 @@ export function validateToken(req, res, next) {
         const { id } = jwt.verify(token, process.env.JWT_SECRET);
 
         res.locals.userId = id;
-
         next();
     } catch (e) {
         console.log(e);

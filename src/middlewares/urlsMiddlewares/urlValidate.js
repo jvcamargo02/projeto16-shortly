@@ -8,6 +8,7 @@ export function validateUrl(req, res, next) {
     }
 
     res.locals.url = req.body.url
+    res.locals.code = req.body.code
 
     next()
 }

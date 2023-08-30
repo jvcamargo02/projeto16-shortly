@@ -5,13 +5,14 @@ async function getUserData(req, res) {
     try {
         const { rows: userData } = await usersData(userId);
 
-        if (userData.length !== 1) {
+        if (userData?.length !== 1) {
             return res
                 .status(404)
                 .send(
                     "We couldn't find your data in our database. Please confirm re-login and confirm your credentials"
                 );
         }
+
 
         const sendData = removeUserId(userData);
 
@@ -26,7 +27,7 @@ async function getUserData(req, res) {
 function removeUserId(userData) {
     const shortenedUrls = userData[0]?.shortenedUrls;
 
-    shortenedUrls.map((url) => {
+    shortenedUrls?.map((url) => {
         delete url.userId;
         delete url.createdAt;
     });

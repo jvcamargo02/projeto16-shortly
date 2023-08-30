@@ -11,6 +11,12 @@ function searchUrlById(id) {
     return clientDb.query(`SELECT * FROM urls WHERE id = $1`, [id]);
 }
 
+function searchCodeByShortUrl(shortUrl) {
+    return clientDb.query(`SELECT * FROM urls WHERE "shortUrl" = $1`, [
+        shortUrl,
+    ]);
+}
+
 function searchUrlByShortUrl(shortUrl) {
     return clientDb.query(
         `UPDATE urls
@@ -32,4 +38,4 @@ function deleteUrlQuery(id, userId) {
     ); 
 }
 
-export { insertUrl, searchUrlById, searchUrlByShortUrl, deleteUrlQuery };
+export { insertUrl, searchUrlById, searchUrlByShortUrl, deleteUrlQuery , searchCodeByShortUrl};
