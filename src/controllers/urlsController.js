@@ -35,7 +35,7 @@ async function getUrlById(req, res) {
         if (urlData?.length === 0) {
             return res
                 .status(404)
-                .send("This url id doesn't exist in our database.");
+                .send("Este código não existe no nosso banco de dados");
         }
 
         const { id: urlId, shortUrl, url } = urlData[0];
@@ -61,7 +61,7 @@ async function getShortUrlRedirect(req, res) {
         if (urlInfo?.length === 0) {
             return res
                 .status(404)
-                .send("This url doesn't exist in our database.");
+                .send("Esta url não existe no nosso banco de dados.");
         }
 
         const { url } = urlInfo[0];
@@ -82,7 +82,7 @@ async function deleteUrl(req, res) {
         const { rows: url } = await searchUrlById(id)
 
         if(url.length !== 1) {
-            return res.status(404).send("Url not found.")
+            return res.status(404).send("Url não encontrada.")
         }
 
         const { rowCount, rows } = await deleteUrlQuery(id, userId)
@@ -91,7 +91,7 @@ async function deleteUrl(req, res) {
             return res.status(401).send("Unauthorized operation.")
         }
 
-        return res.status(204).send("Url deleted.")
+        return res.status(204).send("Url apagada.")
 
     } catch (e) {
         console.log(e)

@@ -18,6 +18,6 @@ export function validateToken(req, res, next) {
 
         return res
             .status(401)
-            .send("The JWT token has expired or is invalid. Please re-login");
+            .send("O token expirou ou é inválido. Por favor faça login novamente.");
     }
 }

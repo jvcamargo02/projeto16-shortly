@@ -30,7 +30,7 @@ function signInController(req, res) {
     const { password: dbPassword, name, id } = res.locals.dbData;
 
     if (!bcrypt.compareSync(password, dbPassword)) {
-        return res.status(401).send("Invalid e-mail or password");
+        return res.status(401).send("E-mail ou senha inválidos.");
     }
 
     const token = jwt.sign({ id }, process.env.JWT_SECRET, {

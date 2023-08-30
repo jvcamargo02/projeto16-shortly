@@ -17,7 +17,7 @@ function confirmPassword(req, res, next) {
     const { userData } = res.locals;
 
     if (userData.password !== userData.confirmPassword) {
-        return res.status(422).send("Passwords don't match");
+        return res.status(422).send("Senhas não correspondem.");
     }
 
     delete userData.confirmPassword;
@@ -34,7 +34,7 @@ async function findEmailInDb(req, res, next) {
         if (rowCount !== 0) {
             return res
                 .status(409)
-                .send("This email address is already being used");
+                .send("Este e-mail já está sendo usado.");
         }
 
         next();
@@ -43,7 +43,7 @@ async function findEmailInDb(req, res, next) {
 
         return res
             .status(500)
-            .send("An error occurred. Please try again later.");
+            .send("Ocorreu um erro. Por favor tente novamente mais tarde.");
     }
 }
 
