@@ -2,10 +2,13 @@ import { Router } from "express";
 import {
     signInController,
     signUpController,
+    socialLoginController
 } from "../controllers/authController.js";
 import {
     findUser,
+    findSocialUser,
     validateSignIn,
+    validateSocialLogin
 } from "../middlewares/authMiddlewares/signInValidate.js";
 import {
     confirmPassword,
@@ -22,6 +25,14 @@ auth.post(
     findEmailInDb,
     signUpController
 );
+
+auth.post(
+    "/socialLogin", 
+    validateSocialLogin,
+    findSocialUser, 
+    socialLoginController
+)
+
 auth.post(
     "/signin",
     validateSignIn,

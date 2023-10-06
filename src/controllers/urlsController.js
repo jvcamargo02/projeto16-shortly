@@ -59,6 +59,46 @@ async function getUrlById(req, res) {
     }
 }
 
+async function editUrl(req, res) {
+    console.log(req)
+    return
+    const { id } = req.params;
+    const { shortUrl, url } = req.body;
+
+    try {
+        const { rowCount } = await updateUrlById(id, shortUrl, url);
+
+        if (rowCount === 0) {
+            return res
+                .status(404)
+                .send("Este código não existe no nosso banco de dados");
+        }
+
+        return res.status(200).send("URL atualizada com sucesso!");
+    } catch (e) {
+        console.log(e);
+
+        return res.status(500).send("Error querying database.");
+    }
+}
+
+async function updateUrlById(id, shortUrl, url) {
+    const query = `
+        UPDATE urls
+        SET "shortUrl" = $1, "url" = $2
+        WHERE "id" = $3
+    `;
+    const values = [shortUrl, url, id];
+
+    try {
+        const { rowCount } = await clientDb.query(query, values);
+        return { rowCount };
+    } catch (e) {
+        console.log(e);
+        throw e;
+    }
+}
+
 async function getShortUrlRedirect(req, res) {
     const { shortUrl } = req.params;
 
@@ -94,10 +134,6 @@ async function deleteUrl(req, res) {
 
         const { rowCount, rows } = await deleteUrlQuery(id, userId)
 
-        if(rowCount !== 1 || rows[0]?.bool !== true){
-            return res.status(401).send("Unauthorized operation.")
-        }
-
         return res.status(204).send("Url apagada.")
 
     } catch (e) {
@@ -107,4 +143,4 @@ async function deleteUrl(req, res) {
     }
 }
 
-export { postShortenUrl, getUrlById, getShortUrlRedirect, deleteUrl };
+export { postShortenUrl, getUrlById, getShortUrlRedirect, deleteUrl, editUrl };

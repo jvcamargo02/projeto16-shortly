@@ -10,7 +10,7 @@ async function signUpController(req, res) {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(userData.password, salt);
 
-    try {
+    try { 
         await insertUser({
             name: userData.name,
             email: userData.email,
@@ -40,4 +40,14 @@ function signInController(req, res) {
     return res.status(200).send(token);
 }
 
-export { signUpController, signInController };
+function socialLoginController(req, res) {
+    const { id } = res.locals.dbData;
+
+    const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: '30d',
+    });
+
+    return res.status(200).send(token);
+}
+
+export { signUpController, signInController, socialLoginController };
