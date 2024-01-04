@@ -6,6 +6,7 @@ import {
     searchUrlByShortUrl,
     searchCodeByShortUrl
 } from "../repository/urlsQueries.js";
+import { clientDb } from "../database/client.js";
 
 async function postShortenUrl(req, res) {
     const { url, code } = res.locals;
@@ -60,13 +61,14 @@ async function getUrlById(req, res) {
 }
 
 async function editUrl(req, res) {
-    console.log(req)
-    return
+    
     const { id } = req.params;
-    const { shortUrl, url } = req.body;
+    const { code, url } = req.body;
+
+
 
     try {
-        const { rowCount } = await updateUrlById(id, shortUrl, url);
+        const { rowCount } = await updateUrlById(id, code, url);
 
         if (rowCount === 0) {
             return res
@@ -83,11 +85,14 @@ async function editUrl(req, res) {
 }
 
 async function updateUrlById(id, shortUrl, url) {
+
     const query = `
         UPDATE urls
         SET "shortUrl" = $1, "url" = $2
         WHERE "id" = $3
     `;
+
+    
     const values = [shortUrl, url, id];
 
     try {
