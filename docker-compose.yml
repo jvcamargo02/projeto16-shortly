@@ -16,6 +16,9 @@ services:
     restart: always
     env_file:
       - .env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
   short-postgres-production:
     image: postgres:13-alpine
     environment:
